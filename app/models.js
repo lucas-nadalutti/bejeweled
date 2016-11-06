@@ -1,8 +1,7 @@
 angular
     .module('Main')
-    .constant('ROWS_NUMBER', 5)
+    .constant('ROWS_NUMBER', 8)
     .constant('COLS_NUMBER', 5)
-    .constant('MAX_MATCH_SIZE', 5)
     .constant('AVAILABLE_COLORS', [
         'green',
         'blue',
@@ -12,9 +11,11 @@ angular
     .constant('MATCH_SCORES', {
         3: 50,
         4: 100,
-        5: 200
+        5: 200,
+        6: 500,
+        7: 1000
     })
-    .factory('Game', function(Board, Gem, ROWS_NUMBER, COLS_NUMBER, MAX_MATCH_SIZE, AVAILABLE_COLORS, MATCH_SCORES) {
+    .factory('Game', function(Board, Gem, ROWS_NUMBER, COLS_NUMBER, AVAILABLE_COLORS, MATCH_SCORES) {
         game = {
             board: null,
             selectedGem: null,
@@ -44,8 +45,8 @@ angular
                 var prevCol = game.selectedGem.col
 
                 neighbours = [
-                    game.board[prevRow-1][prevCol],
-                    game.board[prevRow+1][prevCol],
+                    game.board[prevRow-1] && game.board[prevRow-1][prevCol],
+                    game.board[prevRow+1] && game.board[prevRow+1][prevCol],
                     game.board[prevRow][prevCol-1],
                     game.board[prevRow][prevCol+1],
                 ]
@@ -100,7 +101,7 @@ angular
             for (var i = 0; i < game.board.length; i++) {
                 for (var j = 0; j < game.board[i].length; j++) {
                     gem = game.board[i][j]
-                    gemsToDestroy = checkGemMatches(gem, MAX_MATCH_SIZE)
+                    gemsToDestroy = checkGemMatches(gem)
                     if (gemsToDestroy.length > 0) {
                         score = MATCH_SCORES[gemsToDestroy.length]
                         game.data.score += score
@@ -120,7 +121,7 @@ angular
             }
         }
 
-        var checkGemMatches = function(gem) {
+        var checkGemMatches = function(gem, gemsToIgnore) {
             // Return an array of gems to destroy
 
             var goUp = function(gem) {
@@ -154,9 +155,21 @@ angular
                 gemsToDestroy = gemsToDestroy.concat(horizontalGemsToDestroy)
             }
 
-            if (gemsToDestroy.length > 0) {
-                gemsToDestroy.push(gem)
+            gemsToIgnore = gemsToIgnore || []
+            gemsToDestroy = _.difference(gemsToDestroy, gemsToIgnore)
+
+            if (gemsToDestroy.length == 0) {
+                return gemsToDestroy
             }
+
+            gemsToDestroy.push(gem)
+
+            // Run matches check on each gem to destroy as they might find new matches
+            _.each(gemsToDestroy, function(gem) {
+                gemsToDestroy = _.uniq(gemsToDestroy.concat(
+                    checkGemMatches(gem, _.union(gemsToDestroy, gemsToIgnore))
+                ))
+            })
 
             return gemsToDestroy
         }
@@ -193,6 +206,8 @@ angular
                     rowGems[column] = Gem(row, column, AVAILABLE_COLORS)
                 }
             })
+
+            // checkMatches()
         }
 
         var bringGemsDown = function(gem, destRow) {
