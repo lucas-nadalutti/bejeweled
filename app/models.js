@@ -92,7 +92,7 @@ angular
                         score = MATCH_SCORES[gemsToDestroy.length]
                         game.data.score += score
                         game.data.logs.unshift(
-                            'Destruiu '+gemsToDestroy.length+' pedras '+gem.color+' ('+score+' pontos)'
+                            'Destruiu '+gemsToDestroy.length+' pedras '+gem.color+' (+'+score+' pontos)'
                         )
 
                         columns = _.uniq(_.map(gemsToDestroy, 'col'))
