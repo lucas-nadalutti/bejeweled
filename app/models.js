@@ -13,7 +13,8 @@ angular
         4: 100,
         5: 200,
         6: 500,
-        7: 1000
+        7: 1000,
+        8: 2000
     })
     .factory('Game', function(Board, Gem, ROWS_NUMBER, COLS_NUMBER, AVAILABLE_COLORS, MATCH_SCORES) {
         game = {
