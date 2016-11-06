@@ -1,0 +1,33 @@
+#board {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top; }
+
+#score {
+  width: 20%;
+  display: inline-block;
+  vertical-align: top; }
+
+#logs {
+  width: 25%;
+  display: inline-block;
+  vertical-align: top; }
+
+.gem {
+  width: 50px;
+  height: 50px;
+  margin: 1px;
+  display: inline-block;
+  color: black;
+  border: 1px solid black;
+  border-radius: 25px; }
+  .gem.selected {
+    border: 1px solid white; }
+  .gem.green {
+    background-color: green; }
+  .gem.blue {
+    background-color: blue; }
+  .gem.red {
+    background-color: red; }
+  .gem.orange {
+    background-color: orange; }

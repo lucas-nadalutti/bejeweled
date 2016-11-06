@@ -1,0 +1,34 @@
+<html ng-app="Main">
+    <head>
+        <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/lodash/dist/lodash.min.js"></script>
+
+        <script src="app/main.js"></script>
+        <script src="app/models.js"></script>
+    </head>
+    <body ng-controller="MainController">
+        <div id="board">
+            <div ng-repeat="row in board track by $index">
+                <a
+                    class="gem"
+                    href="#"
+                    ng-repeat="gem in row track by $index"
+                    ng-class="[gem.color, {selected: gem.selected}]"
+                    ng-model="gem"
+                    ng-click="selectGem(gem, rowIndex, gemIndex)">
+                </a>
+            </div>
+        </div>
+        <div id="score">
+            Pontuação: {{ data.score }}
+        </div>
+        <div id="logs">
+            Logs (<a href="#" ng-click="data.logs = []">Apagar</a>)
+            <div ng-repeat="log in data.logs track by $index">
+                {{ log }}
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "bejeweled",
+  "homepage": "https://github.com/lucas-nadalutti/bejeweled",
+  "authors": [
+    "Lucas Nadalutti <lucasnadalutti@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.5.8",
+    "lodash": "^4.16.6"
+  },
+}

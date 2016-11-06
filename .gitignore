@@ -1,0 +1,5 @@
+node_modules
+
+assets/sass
+
+# IMPORTANT: Not ignoring bower_components to enable GitHub page
