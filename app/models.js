@@ -42,6 +42,19 @@ angular
             else if (game.selectedGem) {
                 var prevRow = game.selectedGem.row
                 var prevCol = game.selectedGem.col
+
+                neighbours = [
+                    game.board[prevRow-1][prevCol],
+                    game.board[prevRow+1][prevCol],
+                    game.board[prevRow][prevCol-1],
+                    game.board[prevRow][prevCol+1],
+                ]
+
+                if (neighbours.indexOf(gem) < 0) {
+                    // selected gem is not a neighbour
+                    return
+                }
+
                 game.board[prevRow][prevCol] = gem
                 game.board[gem.row][gem.col] = game.selectedGem
                 game.selectedGem.row = gem.row
